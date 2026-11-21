@@ -43,7 +43,7 @@ make bench && ./qlz-bench your-files/*
 | Compress speed | ~630 MB/s | **~730 MB/s** |
 | Files won on size | 9 of 30 | 21 of 30 |
 
-Read this honestly: QLz's total lead comes from large files and binaries, where its 2 MB window pays off. On small text files (CSS, HTML, short source) Snappy is usually a little smaller. See [BENCHMARKS.md](BENCHMARKS.md) for every file, and run `qlz-bench` on your own data — results vary with the data.
+QLz's total lead comes from large files and binaries, where its 2 MB window pays off. On small text files (CSS, HTML, short source) Snappy is usually a little smaller. See [BENCHMARKS.md](BENCHMARKS.md) for every file, and run `qlz-bench` on your own data — results vary with the data.
 
 ## Stream format
 
@@ -51,4 +51,4 @@ See [docs/FORMAT.md](docs/FORMAT.md). Streams start with `QSPL` 01 and the origi
 
 ## Licence
 
-MIT — see [LICENSE](LICENSE). QLz is made by [Qytte](https://qytte.com).
+MIT — see [LICENSE](LICENSE). QLz is developed by [Qytte](https://qytte.com).
