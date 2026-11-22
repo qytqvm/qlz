@@ -44,6 +44,4 @@ Across the entire 30-file mixed test suite (including 21 short scripts and CSS s
 
 ## Reproduce the benchmark
 
-```sh
-make bench
-./qlz-bench path/to/files/* > bench/results/$(date +%F)-run.txt
+Go to: https://github.com/qytqvm/QSwift/tree/main/qlz
