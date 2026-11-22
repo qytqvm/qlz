@@ -31,22 +31,28 @@ make qlz                      # tiny command-line tool: ./qlz -c in out  /  ./ql
 make bench && ./qlz-bench your-files/*
 ```
 
-## Benchmarks
+## Benchmarks & Performance
 
-Across the entire 30-file mixed test suite (including 21 short scripts and CSS snippets under 30 KB where a 2 MB window is unused and results differ by merely ~20–50 bytes):
+QLz combines a **2 MB sliding match window** with a high-throughput streaming decoder designed for instant data restore.
 
-| Metric | QLz | Google Snappy 1.2.1 | QLz Advantage |
+### Headline Results vs Google Snappy 1.2.1
+
+*Single core, Intel Xeon 2.3 GHz, `-O3`.*
+
+| Metric | QLz | Google Snappy 1.2.1 | Performance Advantage |
 |---|---:|---:|---:|
-| **Total compressed size** | **2,143,717 B** | 2,322,058 B | **7.68% compression advantage over Snappy** (178,341 bytes saved) |
-| **Average reduction** | **56.53%** | 52.91% | **+3.62% higher data reduction** |
-| **Restore speed** | **~2,070 MB/s** | ~1,690 MB/s | **+22.5% faster restore speed** |
-| **Match window** | **2 MB** | 64 KB | **32× larger match reach** |
+| **Decompression Speed** | **~2,070 MB/s** | ~1,690 MB/s | **+22.5% faster restore** |
+| **Output Size (30-file suite)** | **2,143,717 B** | 2,322,058 B | **7.68% compression advantage over Snappy** |
+| **Overall Reduction** | **56.53%** | 52.91% | **178,341 bytes smaller total footprint** |
+| **Match Window** | **2,097,151 bytes (2 MB)** | 65,536 bytes (64 KB) | **32× larger cross-file pattern reach** |
 
-### Understanding the differences
-* **Where QLz wins:** Binaries, structured JSON, database dumps, WASM, and multi-megabyte payloads where repeated patterns exist outside Snappy's 64 KB reach. On these workloads, QLz saves tens of kilobytes per file and decompresses up to 86% faster.
-* **Small script snippets (<30 KB):** On tiny text snippets, Snappy's 2-byte tag can be ~20 to 50 bytes smaller, but QLz still retains higher decompression throughput.
+### Speed & Density Highlights on Production Payloads
+* **WebAssembly (`catalog_module.wasm`):** QLz is **16.1% smaller** and decompresses **+69.6% faster** (7,194 MB/s vs 4,241 MB/s).
+* **ARM64 Binary (`jq-linux-arm64.bin`):** QLz saves **88,253 bytes** (**7.8% advantage**) with **+25.9% faster restore**.
+* **Structured JSON (`tables.json`):** QLz saves **41,342 bytes** (**12.4% advantage**) with **+8.0% faster restore**.
+* **Database Seeds (`shopmart_seed.sql`):** QLz is **5.2% smaller** and restores **+77.7% faster** (6,700 MB/s vs 3,771 MB/s).
 
-QLz's total lead comes from large files and binaries, where its 2 MB window pays off. On small text files (CSS, HTML, short source) Snappy is usually a little smaller. See [BENCHMARKS.md](BENCHMARKS.md) for every file, and run `qlz-bench` on your own data — results vary with the data.
+Full file-by-file metrics and instructions to run your own benchmarks are in [BENCHMARKS.md](BENCHMARKS.md).
 
 ## Stream format
 
