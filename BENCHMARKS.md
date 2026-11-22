@@ -42,6 +42,6 @@ Across the entire 30-file mixed test suite (including 21 short scripts and CSS s
 
 ---
 
-## Reproduce the benchmark
+## For more QLz benchmarks:
 
 Go to: https://github.com/qytqvm/QSwift/tree/main/qlz
