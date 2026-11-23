@@ -46,6 +46,7 @@ QLz combines a **2 MB sliding match window** with a high-throughput streaming de
 | **Overall Reduction** | **56.53%** | 52.91% | **178,341 bytes smaller total footprint** |
 | **Match Window** | **2,097,151 bytes (2 MB)** | 65,536 bytes (64 KB) | **32× larger cross-file pattern reach** |
 
+
 ### Speed & Density Highlights on Production Payloads
 * **WebAssembly (`catalog_module.wasm`):** QLz is **16.1% smaller** and decompresses **+69.6% faster** (7,194 MB/s vs 4,241 MB/s).
 * **ARM64 Binary (`jq-linux-arm64.bin`):** QLz saves **88,253 bytes** (**7.8% advantage**) with **+25.9% faster restore**.
@@ -54,6 +55,7 @@ QLz combines a **2 MB sliding match window** with a high-throughput streaming de
 
 Full file-by-file metrics and instructions to run your own benchmarks are in [BENCHMARKS.md](BENCHMARKS.md).
 
+
 ## Stream format
 
 See [docs/FORMAT.md](docs/FORMAT.md). Streams start with `QSPL` 01 and the original size, so they identify themselves.
@@ -61,3 +63,13 @@ See [docs/FORMAT.md](docs/FORMAT.md). Streams start with `QSPL` 01 and the origi
 ## Licence
 
 MIT — see [LICENSE](LICENSE). QLz is developed by [Qytte](https://qytte.com).
+
+
+### How to Run & Benchmark
+
+```bash
+# Build standalone benchmark harness
+gcc -O3 -o qlz-bench example.c
+
+# Run benchmark across target files
+./qlz-bench path/to/files/*
