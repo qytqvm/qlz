@@ -67,9 +67,12 @@ MIT — see [LICENSE](LICENSE). QLz is developed by [Qytte](https://qytte.com).
 
 ### How to Run & Benchmark
 
+Clone the repository and compile the standalone C harness:
+
 ```bash
-# Build standalone benchmark harness
+# Build the benchmark harness
 gcc -O3 -o qlz-bench example.c
 
 # Run benchmark across target files
 ./qlz-bench path/to/files/*
+
